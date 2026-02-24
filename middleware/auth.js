@@ -2,6 +2,9 @@ import jwt from "jsonwebtoken";
 const SECRET = "hello123"
 const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  if (!authHeader) {
+  return res.status(401).json({ message: "No token provided" });
+}
   const token = authHeader.split(" ")[1];
   try {
     const user = jwt.verify(token, SECRET);
@@ -12,7 +15,6 @@ const authenticate = (req, res, next) => {
     res.status(401).json({ message: "Invalid Token" });
   }
 };
-
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (roles.includes(req.user.role)) {
