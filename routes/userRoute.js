@@ -13,3 +13,4 @@ userRouter.post("/signup", addUser);
 userRouter.delete("/:id", authenticate, authorize("admin"), deleteUser);
 
 export default userRouter;
+
